@@ -11,6 +11,9 @@ const ManagementSidebar = () => {
       <Menu.Item key="/management/user" icon={<SettingOutlined />}>
         <Link href="/management/user">User</Link>
       </Menu.Item>
+      <Menu.Item key="/management/project" icon={<SettingOutlined />}>
+        <Link href="/management/project">Project</Link>
+      </Menu.Item>
       <Menu.Item key="/management/inquiry" icon={<SettingOutlined />}>
         <Link href="/management/inquiry">Inquiry</Link>
       </Menu.Item>
