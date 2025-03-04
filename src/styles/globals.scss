@@ -1,8 +1,14 @@
-// Define global styles
-$primary-color: #0070f3;
-
+html,
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
-  color: $primary-color;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#__next {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
 }

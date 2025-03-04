@@ -5,9 +5,6 @@ export default function Home() {
   return (
     <div style={{ textAlign: "center", marginTop: 50 }}>
       <h1>Welcome to Robin homes</h1>
-      <Link href="/auth/login">
-        <Button type="primary">Go to Login</Button>
-      </Link>
     </div>
   );
 }

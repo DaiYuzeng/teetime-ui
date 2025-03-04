@@ -3,33 +3,29 @@ import { useState } from "react";
 import { useAuthStore } from "@/store/authStore";
 import { useRouter } from "next/router";
 import { Button, Form, Input, message } from "antd";
-
-const hashPassword = async (password: string) => {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(password);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-  return Array.from(new Uint8Array(hashBuffer))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-};
+import { hashPassword } from "@/utils/crypto";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
-  const { setToken } = useAuthStore();
+  const { setAuth } = useAuthStore();
   const router = useRouter();
 
   const handleLogin = async (values: { username: string; password: string }) => {
     setLoading(true);
+    
     try {
-      const hashedPassword = await hashPassword(values.password);
-      const response = await api.post("/token", {
-        username: values.username,
-        hashed_password: hashedPassword,
+      const formData = new URLSearchParams();
+      
+      formData.append("username", values.username);
+      formData.append("password", await hashPassword(values.password));
+
+      const response = await api.post("/token", formData, {
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
       });
 
-      setToken(response.data.access_token);
+      setAuth(values.username, response.data.access_token, response.data.refresh_token);
       message.success("Login successful!");
-      router.push("/dashboard");
+      router.push("/management/dashboard");
     } catch (error: any) {
       message.error(error.response?.data?.detail || "Login failed");
     }
@@ -37,7 +33,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div style={{ margin: "auto", maxWidth: 600 }}>
       <h2>Login</h2>
       <Form onFinish={handleLogin} layout="vertical">
         <Form.Item label="Username" name="username" rules={[{ required: true, message: "Please enter your username" }]}>

@@ -8,11 +8,11 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (!token) {
-      router.push("/login");
+      router.push("/auth/login");
     }
   }, [token]);
 
-  if (!token) return null; // Prevents rendering before redirect
+  if (!token) return null;
 
   return <>{children}</>;
 };
