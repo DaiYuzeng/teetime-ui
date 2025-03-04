@@ -52,7 +52,7 @@ const UserList = () => {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h2>Inquiry List</h2>
+      <h2>User List</h2>
       <Table
         columns={columns}
         dataSource={users}

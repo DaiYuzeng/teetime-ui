@@ -27,7 +27,7 @@ const StatusField: React.FC<InquiryFormProps> = ({ mode }) => {
 const InquiryForm: React.FC<InquiryFormProps> = ({ mode, inquiryId, initialValues, onSuccess }) => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
-  
+  const isDisabled = mode === "edit"
 
   useEffect(() => {
     if (mode === "edit" && initialValues) {
@@ -59,19 +59,19 @@ const InquiryForm: React.FC<InquiryFormProps> = ({ mode, inquiryId, initialValue
   return (
     <Form form={form} layout="vertical" onFinish={handleSubmit}>
       <Form.Item label="Name" name="guest_name" rules={[{ required: true, message: "Please enter your name" }]}>
-        <Input disabled={true} />
+        <Input disabled={isDisabled} />
       </Form.Item>
       <Form.Item label="Phone" name="phone" rules={[{ required: true, message: "Please enter your phone" }]}>
-        <Input disabled={true} />
+        <Input disabled={isDisabled} />
       </Form.Item>
       <Form.Item label="Email" name="email">
-        <Input type="email" disabled={true} />
+        <Input type="email" disabled={isDisabled} />
       </Form.Item>
       
       <StatusField mode={mode} />
 
       <Form.Item label="Message" name="message">
-        <Input.TextArea rows={4} disabled={true} />
+        <Input.TextArea rows={4} disabled={isDisabled} />
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit" loading={loading} block>
