@@ -48,7 +48,7 @@ const InquiryEdit = () => {
   return (
     <div style={{ maxWidth: 600, margin: "auto" }}>
       <h2>Update an Inquiry</h2>
-      {inquiry && <InquiryForm mode="edit" inquiryId={id} initialValues={inquiry} onSuccess={onSuccess} />}
+      {inquiry && <InquiryForm mode="update" inquiryId={id} initialValues={inquiry} onSuccess={onSuccess} />}
     </div>
   );
 };

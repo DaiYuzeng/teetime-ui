@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { Table, message } from "antd";
+import { Table, message, Space, Button } from "antd";
 import { fetchData } from "@/utils/axios";
 import { TablePaginationConfig } from "antd/es/table";
 import Link from "next/link";
 
-const InquiryList = () => {
-  const [inquiries, setInquiries] = useState([]);
+const CategoryList = () => {
+  const [categories, setCategories] = useState([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [pagination, setPagination] = useState<TablePaginationConfig>({
@@ -13,21 +13,21 @@ const InquiryList = () => {
     pageSize: 10,
   });
 
-  const loadInquiries = async (page = 1, pageSize = 10) => {
+  const loadCategories = async (page = 1, pageSize = 10) => {
     setLoading(true);
     try {
       const offset = (page - 1) * pageSize;
-      const { total, data } = await fetchData('/inquiry', pageSize, offset);
-      setInquiries(data);
+      const { total, data } = await fetchData('/category', pageSize, offset);
+      setCategories(data);
       setTotal(total);
     } catch (error) {
-      message.error("Failed to fetch inquiries.");
+      message.error("Failed to fetch Categories.");
     }
     setLoading(false);
   };
 
   useEffect(() => {
-    loadInquiries(pagination.current!, pagination.pageSize!);
+    loadCategories(pagination.current!, pagination.pageSize!);
   }, [pagination]);
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
@@ -36,26 +36,29 @@ const InquiryList = () => {
 
   const columns = [
     {
-      title: "Guest Name",
-      dataIndex: "guest_name",
-      key: "guest_name",
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
       render: (text: string, record: any) => (
-        <Link href={`/management/inquiry/${record.id}/update`}>
+        <Link href={`/management/progress/category/${record.id}`}>
           {text}
         </Link>
       )
     },
-    { title: "Phone", dataIndex: "phone", key: "phone" },
-    { title: "Email", dataIndex: "email", key: "email" },
-    { title: "Status", dataIndex: "status", key: "status" },
+    { title: "key", dataIndex: "key", key: "key" },
   ];
 
   return (
     <div style={{ padding: "20px" }}>
-      <h2>Inquiry List</h2>
+      <h2>Category List</h2>
+      <Space style={{ marginBottom: 16, display: "flex", justifyContent: "flex-end", }}>
+        <Button>
+          <Link href="/management/progress/category/create">Create</Link>
+        </Button>
+      </Space>
       <Table
         columns={columns}
-        dataSource={inquiries}
+        dataSource={categories}
         rowKey="id"
         loading={loading}
         pagination={{
@@ -70,4 +73,4 @@ const InquiryList = () => {
   );
 };
 
-export default InquiryList;
+export default CategoryList;

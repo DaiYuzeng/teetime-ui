@@ -3,14 +3,14 @@ import { Form, Input, Button, message, Select } from "antd";
 import api from "@/utils/axios";
 
 interface InquiryFormProps {
-  mode: "create" | "edit" | "view";
+  mode: "create" | "update" | "view";
   inquiryId?: string;
   initialValues?: { guest_name: string; phone: string; email?: string; message?: string, status?: string };
   onSuccess?: () => void;
 }
 
 const StatusField: React.FC<InquiryFormProps> = ({ mode }) => {
-  if (mode !== 'edit') return null;
+  if (mode !== 'update') return null;
 
   const statusOptions = [
     { value: 'waiting', label: <span>Waiting</span> },
@@ -30,7 +30,7 @@ const InquiryForm: React.FC<InquiryFormProps> = ({ mode, inquiryId, initialValue
   const isDisabled = mode === "edit"
 
   useEffect(() => {
-    if (mode === "edit" && initialValues) {
+    if (mode === "update" && initialValues) {
       form.setFieldsValue(initialValues);
     }
   }, [mode, initialValues, form]);
@@ -43,7 +43,7 @@ const InquiryForm: React.FC<InquiryFormProps> = ({ mode, inquiryId, initialValue
       if (mode === "create") {
         await api.post("/inquiry", values);
         message.success("Inquiry submitted successfully!");
-      } else if (mode === "edit" && inquiryId) {
+      } else if (mode === "update" && inquiryId) {
         await api.put(`/inquiry/${inquiryId}`, values);
         message.success("Inquiry updated successfully!");
       }
