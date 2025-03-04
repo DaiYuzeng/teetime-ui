@@ -45,7 +45,7 @@ const CategoryList = () => {
         </Link>
       )
     },
-    { title: "key", dataIndex: "key", key: "key" },
+    { title: "Key", dataIndex: "key", key: "key" },
   ];
 
   return (
