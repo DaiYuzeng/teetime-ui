@@ -76,13 +76,13 @@ const ProgressList = () => {
       title: "Key",
       dataIndex: "key",
       key: "key",
-      render: (key: string, record: any) => `${categories[record.category_id].key}${key}`,
+      render: (key: string, record: any) => `${categories[record.category_id]?.key}${key}`,
     },
     {
       title: "Category",
       dataIndex: "category_id",
       key: "category_id",
-      render: (categoryId: number) => categories[categoryId].name || "Unknown",
+      render: (categoryId: number) => categories[categoryId]?.name || "Unknown",
     },
     {
       title: "Schedule Status",
