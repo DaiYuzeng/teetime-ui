@@ -1,7 +1,7 @@
 import { Layout } from "antd";
 import ManagementHeader from "@/components/layouts/ManagementHeader";
 import ManagementSidebar from "@/components/layouts/ManagementSidebar";
-import RobinFooter from "@/components/layouts/Footer";
+import TeeTimeFooter from "@/components/layouts/Footer";
 
 const { Content, Sider } = Layout;
 
@@ -15,7 +15,7 @@ const ManagementLayout = ({ children }: { children: React.ReactNode }) => {
         </Sider>
         <Content style={{ flex: 1, padding: "20px" }}>{children}</Content>
       </Layout>
-      <RobinFooter />
+      <TeeTimeFooter />
     </Layout>
   );
 };

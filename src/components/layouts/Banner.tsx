@@ -18,16 +18,16 @@ const App: React.FC = () => {
   return (
     <Carousel afterChange={onChange}>
       <div>
-        <h3 style={contentStyle}>Robinhomes Banner 1</h3>
+        <h3 style={contentStyle}>Banner 1</h3>
       </div>
       <div>
-        <h3 style={contentStyle}>Robinhomes Banner 1</h3>
+        <h3 style={contentStyle}>Banner 2</h3>
       </div>
       <div>
-        <h3 style={contentStyle}>Robinhomes Banner 1</h3>
+        <h3 style={contentStyle}>Banner 3</h3>
       </div>
       <div>
-        <h3 style={contentStyle}>Robinhomes Banner 1</h3>
+        <h3 style={contentStyle}>Banner 4</h3>
       </div>
     </Carousel>
   );

@@ -2,12 +2,12 @@ import { Layout } from "antd";
 
 const { Footer } = Layout;
 
-const RobinFooter = () => {
+const TeeTimeFooter = () => {
   return (
     <Footer style={{ textAlign: 'center' }}>
-      Robin Homes ©{new Date().getFullYear()} Created by Robin Homes
+      BAIST Club ©{new Date().getFullYear()} Created by Yuzeng Dai
     </Footer>
   );
 };
 
-export default RobinFooter;
+export default TeeTimeFooter;
