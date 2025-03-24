@@ -77,6 +77,7 @@ const TeeTimeForm = <T extends object>({
         rules={[{ required: true }]}
       >
         <Select
+          disabled={!isCreate}
           options={Object.values(Type).map((t) => ({ label: t, value: t }))}
           onChange={(value) => {
             setType(value);

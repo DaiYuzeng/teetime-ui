@@ -6,9 +6,9 @@ import dayjs from "dayjs";
 import Link from "next/link";
 
 const tagMap = {
-  waiting: 'warning',
-  approved: 'success',
-  rejected: 'error',
+  Pending: 'warning',
+  Approved: 'success',
+  Denied: 'error',
 };
 
 const TeeTimeList = () => {
