@@ -45,9 +45,12 @@ const UserList = () => {
         </Link>
       )
     },
+    { title: "First Name", dataIndex: "firstname", key: "firstname" },
+    { title: "Last Name", dataIndex: "lastname", key: "lastname" },
+    { title: "Address", dataIndex: "address", key: "address" },
     { title: "Phone", dataIndex: "phone", key: "phone" },
     { title: "Email", dataIndex: "email", key: "email" },
-    { title: "Role", dataIndex: "role", key: "role" },
+    { title: "Membership Level", dataIndex: "role", key: "role" },
   ];
 
   return (

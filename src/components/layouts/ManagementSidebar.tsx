@@ -11,20 +11,12 @@ const ManagementSidebar = () => {
       <Menu.Item key="/management/user" icon={<SettingOutlined />}>
         <Link href="/management/user">User</Link>
       </Menu.Item>
-      <Menu.Item key="/management/project" icon={<SettingOutlined />}>
-        <Link href="/management/project">Project</Link>
+      <Menu.Item key="/management/teetime" icon={<SettingOutlined />}>
+        <Link href="/management/teetime">Tee Time</Link>
       </Menu.Item>
-      <Menu.Item key="/management/inquiry" icon={<SettingOutlined />}>
-        <Link href="/management/inquiry">Inquiry</Link>
+      <Menu.Item key="/management/signature" icon={<SettingOutlined />}>
+        <Link href="/management/signature">Signature</Link>
       </Menu.Item>
-      <Menu.SubMenu key="/management/progress" icon={<FolderOutlined />} title="Progress">
-        <Menu.Item key="/management/progress/category">
-          <Link href="/management/progress/category">Category</Link>
-        </Menu.Item>
-        <Menu.Item key="/management/progress/progress">
-          <Link href="/management/progress/progress">Progress</Link>
-        </Menu.Item>
-      </Menu.SubMenu>
     </Menu>
   );
 };

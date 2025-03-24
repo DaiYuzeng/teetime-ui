@@ -1,102 +1,57 @@
-import { useState } from "react";
 import { useRouter } from "next/router";
-import { Form, Input, Button, message } from "antd";
+import { message } from "antd";
 import api from "@/utils/axios";
 import { hashPassword } from "@/utils/crypto";
 
+import UserForm from "@/components/UserForm";
+import { User } from "@/utils/interface";
+
+interface RegisterUser extends User {
+  password: string;
+  confirm_password: string;
+  shareholder1_username: string;
+  shareholder2_username: string;
+}
+
 const Register = () => {
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [messageApi, contextHolder] = message.useMessage();
 
-  const handleRegister = async (values: { username: string; email: string; phone: string; password: string; confirmPassword: string }) => {
-    if (values.password !== values.confirmPassword) {
-      message.error("Passwords do not match!");
-      return;
+  const beforeSubmit = (values: RegisterUser) => {
+    if (values.password !== values.hashed_password) {
+      messageApi.error("Passwords do not match!");
+      return false;
     }
+  };
 
-    setLoading(true);
+  const onSubmit = async (values: RegisterUser) => {
     try {
+      console.log('4')
       const hashedPassword = await hashPassword(values.password);
+
       await api.post("/register", {
-        username: values.username,
-        phone: values.phone,
-        email: values.email,
+        ...values,
         hashed_password: hashedPassword,
+        password: undefined,
+        confirm_password: undefined,
       });
 
-      message.success("Registration successful! Redirecting to login...");
+      messageApi.success("Registration successful! Redirecting to login...");
       setTimeout(() => router.push("/auth/login"), 2000);
     } catch (error: any) {
-      message.error(error.response?.data?.detail || "Registration failed");
+      messageApi.error(error.response?.data?.detail || "Registration failed");
     }
-    setLoading(false);
   };
 
   return (
-    <div style={{ margin: "auto", maxWidth: 600 }}>
-      <h2>Register</h2>
-      <Form onFinish={handleRegister} layout="vertical">
-        <Form.Item label="Username" name="username" rules={[{ required: true, message: "Please enter your username" }]}>
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="Email"
-          name="email"
-          rules={[
-            { required: true, message: "Please enter your email" },
-            { type: "email", message: "Please enter a valid email" },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="Phone"
-          name="phone"
-          rules={[
-            { required: true, message: "Please enter your phone number" },
-            { pattern: /^[0-9]+$/, message: "Phone number must be digits only" },
-            { min: 10, message: "Phone number must be at least 10 digits" },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[{ required: true, message: "Please enter your password" }]}
-        >
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item
-          label="Confirm Password"
-          name="confirmPassword"
-          dependencies={["password"]}
-          rules={[
-            { required: true, message: "Please confirm your password" },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue("password") === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error("Passwords do not match!"));
-              },
-            }),
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item>
-          <Button type="primary" htmlType="submit" loading={loading} block>
-            Register
-          </Button>
-        </Form.Item>
-      </Form>
-    </div>
+    <>
+      {contextHolder}
+      <UserForm<RegisterUser>
+        onSubmit={onSubmit}
+        beforeSubmit={beforeSubmit}
+        mode="create"
+      />
+    </>
   );
 };
 
