@@ -9,7 +9,6 @@ const WebsiteHeader = () => {
   const router = useRouter();
   const menuItems = [
     { key: "/", label: <Link href="/">Home</Link> },
-    { key: "/inquiry", label: <Link href="/inquiry">Inquiry</Link> },
     ...MenuRight(),
   ];
 

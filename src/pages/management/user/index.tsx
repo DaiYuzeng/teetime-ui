@@ -5,6 +5,7 @@ import { TablePaginationConfig } from "antd/es/table";
 import Link from "next/link";
 
 const UserList = () => {
+  const [messageApi, contextHolder] = message.useMessage();
   const [users, setUsers] = useState([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -21,7 +22,7 @@ const UserList = () => {
       setUsers(data);
       setTotal(total);
     } catch (error) {
-      message.error("Failed to fetch inquiries.");
+      messageApi.error("Failed to fetch users.");
     }
     setLoading(false);
   };
@@ -55,6 +56,7 @@ const UserList = () => {
 
   return (
     <div style={{ padding: "20px" }}>
+      {contextHolder}
       <h2>User List</h2>
       <Table
         columns={columns}

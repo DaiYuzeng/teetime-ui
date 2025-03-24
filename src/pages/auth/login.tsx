@@ -7,6 +7,7 @@ import { hashPassword } from "@/utils/crypto";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
+  const [messageApi, contextHolder] = message.useMessage();
   const { setAuth } = useAuthStore();
   const router = useRouter();
 
@@ -23,19 +24,18 @@ const Login = () => {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
       });
 
-      console.log(values)
-
       setAuth(values.username, response.data.role, response.data.access_token, response.data.refresh_token);
-      message.success("Login successful!");
+      messageApi.success("Login successful!");
       router.push("/management/dashboard");
     } catch (error: any) {
-      message.error(error.response?.data?.detail || "Login failed");
+      messageApi.error(error.response?.data?.detail || "Login failed");
     }
     setLoading(false);
   };
 
   return (
     <div style={{ margin: "auto", maxWidth: 600 }}>
+      {contextHolder}
       <h2>Login</h2>
       <Form onFinish={handleLogin} layout="vertical">
         <Form.Item label="Username" name="username" rules={[{ required: true, message: "Please enter your username" }]}>

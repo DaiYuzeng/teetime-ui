@@ -24,7 +24,7 @@ const TeeTimeCreate = () => {
     if (values.type === "Regular") return true;
 
     if (!values.member_list) {
-      message.error("Member list is required.");
+      messageApi.error("Member list is required.");
       return false;
     }
   

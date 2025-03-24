@@ -7,6 +7,7 @@ import { User } from "@/utils/interface";
 
 const UserEdit = () => {
   const router = useRouter();
+  const [messageApi, contextHolder] = message.useMessage();
   const id: string | undefined = Array.isArray(router.query.id) ? router.query.id[0] : router.query.id;
   const mode = router.query.view !== undefined ? 'view' : 'update';
 
@@ -22,7 +23,7 @@ const UserEdit = () => {
         const response = await api.get(`/user/${id}`);
         setInitialValues(response.data);
       } catch (error) {
-        message.error("Failed to fetch user.");
+        messageApi.error("Failed to fetch user.");
       } finally {
         setLoading(false);
       }
@@ -35,21 +36,24 @@ const UserEdit = () => {
     try {
       values.id = Number(id);
       await api.put(`/user/${id}`, values);
-      message.success("User updated successfully!");
+      messageApi.success("User updated successfully!");
       router.push("/management/user");
     } catch (error: any) {
-      message.error(error.response?.data?.detail || "Failed to update user");
+      messageApi.error(error.response?.data?.detail || "Failed to update user");
     }
   };
 
   if (loading) return <p>Loading user...</p>;
 
   return (
-    <UserForm<User>
-      mode={mode}
-      onSubmit={onSubmit}
-      initialValues={initialValues}
-    />
+    <>
+      {contextHolder}
+      <UserForm<User>
+        mode={mode}
+        onSubmit={onSubmit}
+        initialValues={initialValues}
+      />
+    </>
   );
 };
 
