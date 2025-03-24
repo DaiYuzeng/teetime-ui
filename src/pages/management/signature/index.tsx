@@ -119,7 +119,7 @@ const SignatureList = () => {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h2>User List</h2>
+      <h2>Signature List</h2>
       <Table
         columns={columns}
         dataSource={rows}

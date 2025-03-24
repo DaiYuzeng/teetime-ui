@@ -10,7 +10,7 @@ const Login = () => {
   const { setAuth } = useAuthStore();
   const router = useRouter();
 
-  const handleLogin = async (values: { username: string; password: string }) => {
+  const handleLogin = async (values: { username: string; password: string, role: string }) => {
     setLoading(true);
     
     try {
@@ -23,7 +23,9 @@ const Login = () => {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
       });
 
-      setAuth(values.username, response.data.access_token, response.data.refresh_token);
+      console.log(values)
+
+      setAuth(values.username, response.data.role, response.data.access_token, response.data.refresh_token);
       message.success("Login successful!");
       router.push("/management/dashboard");
     } catch (error: any) {
