@@ -29,6 +29,7 @@ export enum Status {
   pending = "Pending",
   approved = "Approved",
   denied = "Denied",
+  canceled = "Canceled",
 }
 
 const TeeTimeForm = <T extends object>({
@@ -44,6 +45,11 @@ const TeeTimeForm = <T extends object>({
   const isCreate = mode === "create";
   const isView = mode === "view";
   const role = useAuthStore((state) => state.role);
+  const statusMap = Object.values(Status).map((s) => ({
+    label: s,
+    value: s,
+    disabled: role !== Role.admin && role !== Role.staff && s !== 'Canceled'
+  }))
 
   const formTitle = isCreate ? "Create Tee Time" : mode === "update" ? "Update Tee Time" : "View Tee Time";
 
@@ -87,7 +93,7 @@ const TeeTimeForm = <T extends object>({
         {
           type === Type.regular ? (
             <Form.Item label="Player Count" name="player_count" rules={[{ required: true }]}>
-              <InputNumber min={1} max={10} style={{ width: "100%" }} />
+              <InputNumber min={1} max={4} style={{ width: "100%" }} />
             </Form.Item>
           ) : null
         }
@@ -150,7 +156,7 @@ const TeeTimeForm = <T extends object>({
         
         { mode === 'update' ? (
           <Form.Item label="Status" name="status">
-            <Select disabled={role !== Role.admin && role !== Role.staff} options={Object.values(Status).map((s) => ({ label: s, value: s }))} />
+            <Select options={statusMap} />
           </Form.Item>
         ): null }
 

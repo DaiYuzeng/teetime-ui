@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
-import { Table, message, Tag, Button, Space } from "antd";
+import { Table, message, Tag, Button, Space, Dropdown } from "antd";
+import { MoreOutlined } from "@ant-design/icons";
 import { TablePaginationConfig } from "antd/es/table";
 import { fetchData } from "@/utils/axios";
+import api from "@/utils/axios";
 import dayjs from "dayjs";
 import Link from "next/link";
+
+import type { MenuProps } from 'antd';
 
 const tagMap = {
   Pending: 'warning',
@@ -42,6 +46,16 @@ const TeeTimeList = () => {
     setPagination(pagination);
   };
 
+  const handleDelete = async (id: number) => {
+    try {
+      await api.delete(`/teetime/${id}`);
+      messageApi.success('Tee Time deleted successfully');
+      loadRows(pagination.current!, pagination.pageSize!); // refresh list
+    } catch (err) {
+      messageApi.error('Failed to delete tee time');
+    }
+  };
+
   const columns = [
     {
       title: "Tee Time",
@@ -73,6 +87,28 @@ const TeeTimeList = () => {
       render: (status: keyof typeof tagMap) => (
         <Tag color={tagMap[status]}>{status}</Tag>
       ),
+    },
+    {
+      title: "Actions",
+      key: "actions",
+      render: (_: any, record: any) => {
+        const dropdownItems: MenuProps['items'] = [
+          {
+            key: 'delete',
+            label: (
+              <span onClick={() => handleDelete(record.id)}>
+                Delete
+              </span>
+            ),
+          },
+        ];
+    
+        return (
+          <Dropdown menu={{ items: dropdownItems }} trigger={["click"]}>
+            <Button icon={<MoreOutlined />} />
+          </Dropdown>
+        );
+      },
     },
   ];
 

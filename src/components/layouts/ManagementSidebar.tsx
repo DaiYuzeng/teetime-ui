@@ -19,9 +19,12 @@ const ManagementSidebar = () => {
           <Link href="/management/user">User</Link>
         </Menu.Item>
       ) : null}
-      <Menu.Item key="/management/teetime" icon={<SettingOutlined />}>
-        <Link href="/management/teetime">Tee Time</Link>
-      </Menu.Item>
+      {role !== 'null' ? (
+        <Menu.Item key="/management/teetime" icon={<SettingOutlined />}>
+          <Link href="/management/teetime">Tee Time</Link>
+        </Menu.Item>
+      ) : null}
+      
       {[Role.admin, Role.staff, Role.shareholder].includes(role as Role) ? (
         <Menu.Item key="/management/signature" icon={<SettingOutlined />}>
           <Link href="/management/signature">Signature</Link>
