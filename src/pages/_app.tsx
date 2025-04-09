@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
 import type { NextPage } from "next";
 import WebsiteLayout from "@/components/layouts/Website";
@@ -17,6 +18,7 @@ type AppPropsWithLayout = AppProps & {
 
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const [isClient, setIsClient] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setIsClient(true);
@@ -24,7 +26,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   if (!isClient) return null;
 
-  const isManagementPage = typeof window !== "undefined" && window.location.pathname.startsWith("/management");
+  const isManagementPage = router.pathname.startsWith("/management");
 
   if (isManagementPage) {
     return (
